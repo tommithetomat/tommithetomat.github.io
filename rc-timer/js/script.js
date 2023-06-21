@@ -26,14 +26,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = todoList.querySelector("form");
   const taskList = todoList.querySelector("ul");
 
-  let totalTime = 1 * 60;
+  let totalTime = 25 * 60;
   let time;
   let timeTotal = totalTime;
   let currentTime = totalTime;
   let timerInterval;
   let isTimerRunning = false;
-  let longBreakTime = 2 * 60;
-  let shortBreakTime = 1 * 60;
+  let longBreakTime = 15 * 60;
+  let shortBreakTime = 5 * 60;
   let isShortBreakTime = false;
   let isLongBreakTime = false;
   let sessionTime = true;
@@ -93,12 +93,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // time = totalTime;
-
   sessionTimeDisplay.innerHTML = formatTime(timeTotal);
 
   increaseBtn.addEventListener("click", () => {
-    timeTotal += 60; // увеличиваем на 60 секунд
     currentTime += 61;
     updateTimer();
     sessionTimeDisplay.innerHTML = formatTime(timeTotal);
@@ -106,7 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   decreaseBtn.addEventListener("click", () => {
     if (timeTotal > 20 * 60) {
-      // минимальное значение таймера - 1 минута
       timeTotal -= 60;
       currentTime -= 59;
       updateTimer();
@@ -115,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function updTimeDisplay() {
-    const minutes = Math.floor(currentTime / 60); //currenttime
+    const minutes = Math.floor(currentTime / 60);
     const seconds = currentTime % 60;
     const displayString =
       (minutes < 10 ? "0" : "") +
@@ -128,13 +124,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const updateTimer = () => {
     updTimeDisplay();
-    // Обновляем длину окружности для заполнения круга пропорционально времени
     const progress = currentTime / timeTotal;
     const circumference = timerPath.getTotalLength();
     timerPath.style.strokeDashoffset = progress * circumference;
     timerPath.style.strokeDasharray = circumference;
 
-    // Обновляем счетчик времени
     currentTime--;
 
     // свитч
@@ -147,13 +141,11 @@ document.addEventListener("DOMContentLoaded", () => {
         currentTime = shortBreakTime;
         isShortBreakTime = true;
         sessionCount++;
-        timeTotal = shortBreakTime; //time
+        timeTotal = shortBreakTime;
         sessionTime = false;
         isLongBreakTime = false;
 
         timerStatus.innerHTML = "Short break";
-
-        // Звуковой сигнал
         audio_shortbreak.play();
       } else if (
         (isShortBreakTime === true && pomodoroQuantity < sessionsQuantity) ||
@@ -162,13 +154,13 @@ document.addEventListener("DOMContentLoaded", () => {
         currentTime = totalTime;
         sessionTime = true;
         pomodoroQuantity++;
-        timeTotal = totalTime; //time
+        timeTotal = totalTime; 
         isShortBreakTime = false;
         isLongBreakTime = false;
 
         timerStatus.innerHTML = "in Session " + pomodoroQuantity;
 
-        // Звуковой сигнал
+        
         audio_start.play();
       } else if (
         sessionTime === true &&
@@ -186,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         timerStatus.innerHTML = "Looong break";
 
-        timeTotal = longBreakTime; //time
+        timeTotal = longBreakTime;
 
         audio_longbreak.play();
       } else {
@@ -209,14 +201,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Пауза таймера
   const pauseTimer = () => {
     clearInterval(timerInterval);
     isTimerRunning = false;
     startBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"><style>svg{fill:#000000}</style><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg>`;
   };
 
-  // Остановка таймера
   const stopTimer = () => {
     clearInterval(timerInterval);
     isTimerRunning = false;
@@ -225,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
     timerPath.style.strokeDashoffset = 0;
   };
 
-  // Сброс таймера
+  
   const resetTimer = () => {
     timerStatus.innerHTML = "Waiting for start";
     time = timeTotal;
@@ -236,10 +226,8 @@ document.addEventListener("DOMContentLoaded", () => {
     sessionTimeDisplay.innerHTML = formatTime(timeTotal);
   };
 
-  // Запускаем таймер при загрузке страницы
   updateTimer();
 
-  // Добавляем обработчики событий для кнопок запуска и сброса таймера
   startBtn.addEventListener("click", startTimer);
   resetBtn.addEventListener("click", resetTimer);
 
@@ -306,13 +294,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return checkbox;
   }
 
-  // функция для сохранения задач в Local Storage
   function saveTasks() {
     localStorage.setItem("tasks", taskList.innerHTML);
   }
 
   function generateTaskId() {
-    // Генерируем случайный идентификатор задачи
     return Date.now().toString() + Math.floor(Math.random() * 1000).toString();
   }
 
@@ -353,8 +339,6 @@ document.addEventListener("DOMContentLoaded", () => {
           localStorage.removeItem("activeTaskId");
         }
       }
-  
-      // Установка состояния выполненных задач
       const completedTasks = taskList.querySelectorAll(".completed");
       completedTasks.forEach((task) => {
         const checkbox = task.querySelector(".task-checkbox");
