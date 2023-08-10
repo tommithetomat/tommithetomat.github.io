@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Крестики-нолики</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+	<div id="game">
+		<h1>Крестики-нолики</h1>
+		<div class="player-form">
+			<div class="player-input">
+				<label for="playerX">Имя игрока X:</label>
+				<input type="text" id="playerX" placeholder="Имя игрока X">
+			</div>
+			<div class="player-input">
+				<label for="playerO">Имя игрока O:</label>
+				<input type="text" id="playerO" placeholder="Имя игрока O">
+			</div>
+			<div class="starting-player">
+				<label for="startingPlayer">Начинает игрок</label>
+				<select id="startingPlayer">
+					<option value="X">Игрок X</option>
+					<option value="O">Игрок O</option>
+				</select>
+			</div>
+			<button id="startButton">Начать игру</button>
+		</div>
+		<div id="board"></div>
+		<div id="status"></div>
+		<div id="score"></div>
+	</div>
+
+	<script type="module" src="js/script.js"></script>
+</body>
+</html>
+
